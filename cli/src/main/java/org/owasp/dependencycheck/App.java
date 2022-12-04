@@ -81,6 +81,9 @@ public class App {
      */
     @SuppressWarnings("squid:S4823")
     public static void main(String[] args) {
+        if (System.getProperty("jcs.logSystem") == null) {
+            System.setProperty("jcs.logSystem", "slf4j");
+        }
         final int exitCode;
         final App app = new App();
         exitCode = app.run(args);
@@ -586,7 +589,7 @@ public class App {
                 cli.getStringArgument(CliParser.ARGUMENT.OSSINDEX_PASSWORD, Settings.KEYS.ANALYZER_OSSINDEX_PASSWORD));
         settings.setStringIfNotEmpty(Settings.KEYS.ANALYZER_OSSINDEX_WARN_ONLY_ON_REMOTE_ERRORS,
                 cli.getStringArgument(CliParser.ARGUMENT.OSSINDEX_WARN_ONLY_ON_REMOTE_ERRORS,
-                    Settings.KEYS.ANALYZER_OSSINDEX_WARN_ONLY_ON_REMOTE_ERRORS));
+                        Settings.KEYS.ANALYZER_OSSINDEX_WARN_ONLY_ON_REMOTE_ERRORS));
         settings.setFloat(Settings.KEYS.JUNIT_FAIL_ON_CVSS,
                 cli.getFloatArgument(CliParser.ARGUMENT.FAIL_JUNIT_ON_CVSS, 0));
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_ARTIFACTORY_ENABLED,

@@ -289,8 +289,9 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
     @Parameter(property = "dependency-check.virtualSnapshotsFromReactor", defaultValue = "true")
     private Boolean virtualSnapshotsFromReactor;
     /**
-     * The report format to be generated (HTML, XML, JUNIT, CSV, JSON, SARIF, JENKINS,
-     * ALL). Multiple formats can be selected using a comma delineated list.
+     * The report format to be generated (HTML, XML, JUNIT, CSV, JSON, SARIF,
+     * JENKINS, ALL). Multiple formats can be selected using a comma delineated
+     * list.
      */
     @SuppressWarnings("CanBeFinal")
     @Parameter(property = "format", defaultValue = "HTML", required = true)
@@ -303,8 +304,9 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
     @Parameter(property = "prettyPrint")
     private Boolean prettyPrint;
     /**
-     * The report format to be generated (HTML, XML, JUNIT, CSV, JSON, SARIF, JENKINS,
-     * ALL). Multiple formats can be selected using a comma delineated list.
+     * The report format to be generated (HTML, XML, JUNIT, CSV, JSON, SARIF,
+     * JENKINS, ALL). Multiple formats can be selected using a comma delineated
+     * list.
      */
     @Parameter(property = "formats", required = true)
     private String[] formats;
@@ -2333,19 +2335,23 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
      * solution from SO: https://stackoverflow.com/a/50723801
      */
     private void muteJCS() {
+        if (System.getProperty("jcs.logSystem") == null) {
+            System.setProperty("jcs.logSystem", "slf4j");
+        }
+
         final String[] noisyLoggers = {
-            "org.apache.commons.jcs.auxiliary.disk.AbstractDiskCache",
-            "org.apache.commons.jcs.engine.memory.AbstractMemoryCache",
-            "org.apache.commons.jcs.engine.control.CompositeCache",
-            "org.apache.commons.jcs.auxiliary.disk.indexed.IndexedDiskCache",
-            "org.apache.commons.jcs.engine.control.CompositeCache",
-            "org.apache.commons.jcs.engine.memory.AbstractMemoryCache",
-            "org.apache.commons.jcs.engine.control.event.ElementEventQueue",
-            "org.apache.commons.jcs.engine.memory.AbstractDoubleLinkedListMemoryCache",
-            "org.apache.commons.jcs.auxiliary.AuxiliaryCacheConfigurator",
-            "org.apache.commons.jcs.engine.control.CompositeCacheManager",
-            "org.apache.commons.jcs.utils.threadpool.ThreadPoolManager",
-            "org.apache.commons.jcs.engine.control.CompositeCacheConfigurator"};
+            "org.apache.commons.jcs3.auxiliary.disk.AbstractDiskCache",
+            "org.apache.commons.jcs3.engine.memory.AbstractMemoryCache",
+            "org.apache.commons.jcs3.engine.control.CompositeCache",
+            "org.apache.commons.jcs3.auxiliary.disk.indexed.IndexedDiskCache",
+            "org.apache.commons.jcs3.engine.control.CompositeCache",
+            "org.apache.commons.jcs3.engine.memory.AbstractMemoryCache",
+            "org.apache.commons.jcs3.engine.control.event.ElementEventQueue",
+            "org.apache.commons.jcs3.engine.memory.AbstractDoubleLinkedListMemoryCache",
+            "org.apache.commons.jcs3.auxiliary.AuxiliaryCacheConfigurator",
+            "org.apache.commons.jcs3.engine.control.CompositeCacheManager",
+            "org.apache.commons.jcs3.utils.threadpool.ThreadPoolManager",
+            "org.apache.commons.jcs3.engine.control.CompositeCacheConfigurator"};
         for (String loggerName : noisyLoggers) {
             try {
                 //This is actually a MavenSimpleLogger, but due to various classloader issues, can't work with the directly.
