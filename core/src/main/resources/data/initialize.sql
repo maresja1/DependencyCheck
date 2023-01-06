@@ -28,8 +28,8 @@ CREATE TABLE cpeEntry (id INT auto_increment PRIMARY KEY, part CHAR(1), vendor V
 version VARCHAR(255), update_version VARCHAR(255), edition VARCHAR(255), lang VARCHAR(20), sw_edition VARCHAR(255), 
 target_sw VARCHAR(255), target_hw VARCHAR(255), other VARCHAR(255), ecosystem VARCHAR(255));
 
-CREATE TABLE software (cveid INT, cpeEntryId INT, versionEndExcluding VARCHAR(60), versionEndIncluding VARCHAR(60),
-                       versionStartExcluding VARCHAR(60), versionStartIncluding VARCHAR(60), vulnerable BOOLEAN
+CREATE TABLE software (cveid INT, cpeEntryId INT, versionEndExcluding VARCHAR(255), versionEndIncluding VARCHAR(255),
+                       versionStartExcluding VARCHAR(255), versionStartIncluding VARCHAR(255), vulnerable BOOLEAN
     , CONSTRAINT fkSoftwareCve FOREIGN KEY (cveid) REFERENCES vulnerability(id) ON DELETE CASCADE
     , CONSTRAINT fkSoftwareCpeProduct FOREIGN KEY (cpeEntryId) REFERENCES cpeEntry(id));
 
